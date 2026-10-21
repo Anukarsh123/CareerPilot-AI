@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Career Coach - CareerPilot-AI{% endblock %}
+
+{% block content %}
+<div class="space-y-6 py-2">
+    <div class="hero-card p-6 md:p-8">
+        <span class="badge badge-primary">AI career coach</span>
+        <h1 class="mt-4 text-3xl font-black text-white md:text-4xl">Ask for career guidance</h1>
+        <p class="mt-2 text-slate-300">Get clear, relevant advice about your resume, skill gaps, interview prep, and next career steps.</p>
+    </div>
+
+    <div class="panel p-6 md:p-7">
+        <form method="POST" action="{{ url_for('coach.index') }}" class="space-y-4">
+            <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200">Target role</label>
+                <input type="text" name="target_role" value="{{ default_target_role or 'Software Engineer' }}" class="w-full">
+            </div>
+            <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200">Ask your question</label>
+                <textarea name="question" rows="4" placeholder="How should I improve my resume for a backend engineer role?" required></textarea>
+            </div>
+            <button type="submit" class="primary-btn">Get guidance</button>
+        </form>
+    </div>
+
+    {% if response %}
+    <div class="panel p-6 md:p-7">
+        <div class="mb-4 flex items-center justify-between gap-3">
+            <h2 class="text-2xl font-bold text-white">Coach response</h2>
+            <span class="badge badge-success">{{ response.role }}</span>
+        </div>
+
+        <div class="rounded-2xl border border-slate-700 bg-slate-950/50 p-4 text-slate-200">
+            <p class="text-sm leading-7">{{ response.answer }}</p>
+        </div>
+
+        <div class="mt-5 grid gap-4 md:grid-cols-2">
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/50 p-4">
+                <h3 class="mb-3 text-lg font-semibold text-white">Suggested steps</h3>
+                <ul class="space-y-2 text-sm text-slate-300">
+                    {% for step in response.steps %}
+                    <li class="flex gap-2"><span class="text-indigo-400">•</span><span>{{ step }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/50 p-4">
+                <h3 class="mb-3 text-lg font-semibold text-white">Focus skills</h3>
+                <div class="flex flex-wrap gap-2">
+                    {% for skill in response.focus_skills %}
+                    <span class="rounded-full border border-cyan-500/40 bg-cyan-500/10 px-2 py-1 text-xs text-cyan-200">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if history %}
+    <div class="panel p-6 md:p-7">
+        <h2 class="mb-4 text-2xl font-bold text-white">Recent chat history</h2>
+        <div class="space-y-3">
+            {% for item in history %}
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/50 p-4">
+                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-indigo-300">You</p>
+                <p class="text-sm text-slate-200">{{ item.question }}</p>
+                <p class="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">Coach</p>
+                <p class="mt-1 text-sm text-slate-300">{{ item.answer }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6 py-8 md:py-10">
+    <div class="hero-card p-6 md:p-8">
+        <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div class="flex items-center gap-5">
+                <div class="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 via-violet-500 to-cyan-400 text-3xl font-black text-white shadow-lg shadow-indigo-500/30">
+                    {{ user.username[0].upper() }}
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.22em] text-indigo-200/80">Professional profile</p>
+                    <h1 class="mt-2 text-3xl font-black text-white md:text-4xl">{{ user.display_name }}</h1>
+                    <p class="mt-2 text-slate-300">@{{ user.username }} • <span class="font-semibold text-cyan-300">{{ user.role.capitalize() }}</span></p>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-right">
+                <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Career level</p>
+                <p class="mt-2 text-2xl font-black text-white">Level {{ user.level or 1 }}</p>
+                <p class="text-sm text-indigo-200">{{ user.xp_points or 0 }} XP</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-3">
+        <div class="metric-card p-5 hover-lift">
+            <p class="text-sm text-slate-400">Resumes</p>
+            <h2 class="mt-3 text-3xl font-black text-white">{{ resumes_count }}</h2>
+            <p class="mt-2 text-xs text-slate-400">Uploaded and analyzed</p>
+        </div>
+        <div class="metric-card p-5 hover-lift">
+            <p class="text-sm text-slate-400">Interviews</p>
+            <h2 class="mt-3 text-3xl font-black text-white">{{ interviews_count }}</h2>
+            <p class="mt-2 text-xs text-slate-400">Mock sessions completed</p>
+        </div>
+        <div class="metric-card p-5 hover-lift">
+            <p class="text-sm text-slate-400">Roadmaps</p>
+            <h2 class="mt-3 text-3xl font-black text-white">{{ roadmaps_count }}</h2>
+            <p class="mt-2 text-xs text-slate-400">Career plans generated</p>
+        </div>
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
+        <div class="panel p-6 md:p-7">
+            <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-2xl font-bold text-white">Profile overview</h2>
+                <span class="badge badge-primary">Active</span>
+            </div>
+
+            <div class="space-y-5">
+                <div class="rounded-2xl border border-slate-700 bg-slate-950/50 p-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Email</p>
+                    <p class="mt-2 text-base font-medium text-white">{{ user.email }}</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-700 bg-slate-950/50 p-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Target role</p>
+                    <p class="mt-2 text-base font-medium text-white">{{ user.role.capitalize() }}</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-700 bg-slate-950/50 p-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-400">GitHub</p>
+                    <p class="mt-2 text-base font-medium text-white">{{ user.github_username or 'Not connected yet' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel p-6 md:p-7">
+            <h2 class="text-2xl font-bold text-white">Career snapshot</h2>
+            <div class="mt-5 space-y-3">
+                <div class="rounded-2xl border border-indigo-500/20 bg-indigo-500/10 p-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-indigo-300">Profile strength</p>
+                    <p class="mt-2 text-2xl font-black text-white">{{ ((resumes_count * 25) + (interviews_count * 15) + (roadmaps_count * 20)) % 100 + 35 }}%</p>
+                </div>
+                <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-emerald-300">Focus area</p>
+                    <p class="mt-2 text-lg font-bold text-white">{{ user.role.capitalize() }}</p>
+                </div>
+                <div class="rounded-2xl border border-cyan-500/20 bg-cyan-500/10 p-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-cyan-300">Next milestone</p>
+                    <p class="mt-2 text-sm text-cyan-100">Complete one more portfolio project and keep your resume aligned to the target role.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel p-6 md:p-7">
+        <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-white">Edit profile</h2>
+            <span class="badge badge-secondary">Premium</span>
+        </div>
+
+        <form method="POST" action="{{ url_for('auth.profile') }}" class="grid gap-4 md:grid-cols-2">
+            <div class="md:col-span-2">
+                <label class="mb-1 block text-sm font-medium text-slate-300">Full name</label>
+                <input type="text" name="full_name" value="{{ user.full_name or user.username }}" class="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-3 py-2 text-white">
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-slate-300">Target role</label>
+                <input type="text" name="target_role" value="{{ user.target_role or 'Software Engineer' }}" class="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-3 py-2 text-white">
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-slate-300">GitHub username</label>
+                <input type="text" name="github_username" value="{{ user.github_username or '' }}" class="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-3 py-2 text-white">
+            </div>
+            <div class="md:col-span-2">
+                <label class="mb-1 block text-sm font-medium text-slate-300">Bio</label>
+                <textarea name="bio" rows="4" class="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-3 py-2 text-white">{{ user.bio or 'Career-focused learner building projects, improving skills, and preparing for the next role.' }}</textarea>
+            </div>
+            <div class="md:col-span-2">
+                <button type="submit" class="primary-btn">Save profile</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

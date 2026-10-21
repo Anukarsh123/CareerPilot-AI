@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}CareerPilot-AI - AI-Powered Career Platform{% endblock %}
+
+{% block content %}
+<div class="space-y-10 py-6 md:py-10">
+    <section class="hero-card rounded-[28px] p-6 md:p-10 lg:p-12">
+        <div class="grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+            <div class="text-left">
+                <span class="badge badge-primary">Career acceleration platform</span>
+                <h1 class="mt-5 text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">
+                    Turn your job search into a <span class="text-gradient">high-conviction strategy</span>
+                </h1>
+                <p class="mt-5 max-w-xl text-base text-slate-300 md:text-lg">
+                    Build ATS-ready resumes, sharpen interview confidence, and map your next move with AI-powered guidance designed for tech careers.
+                </p>
+                <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <a href="{{ url_for('auth.register') }}" class="primary-btn text-base">Get started free</a>
+                    <a href="{{ url_for('auth.login') }}" class="secondary-btn text-base">Sign in</a>
+                </div>
+                <div class="mt-8 flex flex-wrap items-center gap-6 text-sm text-slate-300">
+                    <span>✔ ATS optimization</span>
+                    <span>✔ AI interview drills</span>
+                    <span>✔ Career roadmap planning</span>
+                </div>
+            </div>
+
+            <div class="panel p-5 md:p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <p class="text-sm text-slate-400">Career readiness</p>
+                        <h2 class="text-3xl font-bold text-white">87%</h2>
+                    </div>
+                    <span class="pill pill-success">On track</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="metric-card rounded-2xl p-4">
+                        <div class="flex items-center justify-between text-sm text-slate-300">
+                            <span>Resume score</span>
+                            <span class="font-semibold text-white">92/100</span>
+                        </div>
+                        <div class="mt-3 h-2.5 w-full rounded-full bg-slate-800">
+                            <div class="h-2.5 w-[92%] rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-400"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card rounded-2xl p-4">
+                        <div class="flex items-center justify-between text-sm text-slate-300">
+                            <span>Interview readiness</span>
+                            <span class="font-semibold text-white">85/100</span>
+                        </div>
+                        <div class="mt-3 h-2.5 w-full rounded-full bg-slate-800">
+                            <div class="h-2.5 w-[85%] rounded-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-sky-400"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card rounded-2xl p-4">
+                        <div class="flex items-center justify-between text-sm text-slate-300">
+                            <span>Skill roadmap</span>
+                            <span class="font-semibold text-white">6 modules</span>
+                        </div>
+                        <div class="mt-3 flex gap-2">
+                            <span class="h-2.5 flex-1 rounded-full bg-indigo-500"></span>
+                            <span class="h-2.5 flex-1 rounded-full bg-violet-500"></span>
+                            <span class="h-2.5 flex-1 rounded-full bg-cyan-400"></span>
+                            <span class="h-2.5 flex-1 rounded-full bg-slate-700"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid gap-5 md:grid-cols-3">
+        <div class="metric-card rounded-2xl p-5 hover-lift">
+            <p class="text-sm text-slate-400">Resumes optimized</p>
+            <div class="mt-3 flex items-end justify-between">
+                <h3 class="text-3xl font-black text-white">320+</h3>
+                <span class="badge badge-primary">AI matched</span>
+            </div>
+        </div>
+        <div class="metric-card rounded-2xl p-5 hover-lift">
+            <p class="text-sm text-slate-400">Interview sessions</p>
+            <div class="mt-3 flex items-end justify-between">
+                <h3 class="text-3xl font-black text-white">1.8k</h3>
+                <span class="badge badge-success">Practice tracked</span>
+            </div>
+        </div>
+        <div class="metric-card rounded-2xl p-5 hover-lift">
+            <p class="text-sm text-slate-400">Roadmaps created</p>
+            <div class="mt-3 flex items-end justify-between">
+                <h3 class="text-3xl font-black text-white">540</h3>
+                <span class="badge badge-primary">Career goals</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel p-6 md:p-8">
+        <div class="mb-6">
+            <span class="badge badge-primary">Why users stay</span>
+            <h2 class="mt-4 text-3xl font-bold text-white">Everything you need to move forward</h2>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            <div class="feature-card rounded-2xl p-5">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/15 text-2xl">📄</div>
+                <h3 class="text-xl font-semibold text-white">Resume builder</h3>
+                <p class="mt-2 text-sm text-slate-300">Create polished, ATS-focused resume versions tailored to different job descriptions.</p>
+            </div>
+
+            <div class="feature-card rounded-2xl p-5">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/15 text-2xl">🎯</div>
+                <h3 class="text-xl font-semibold text-white">Interview practice</h3>
+                <p class="mt-2 text-sm text-slate-300">Run realistic mock interviews with structured feedback and measurable improvement.</p>
+            </div>
+
+            <div class="feature-card rounded-2xl p-5">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/15 text-2xl">🧭</div>
+                <h3 class="text-xl font-semibold text-white">Learning roadmap</h3>
+                <p class="mt-2 text-sm text-slate-300">Turn role goals into step-by-step milestones and a practical skill progression plan.</p>
+            </div>
+
+            <div class="feature-card rounded-2xl p-5">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15 text-2xl">📈</div>
+                <h3 class="text-xl font-semibold text-white">Career tracking</h3>
+                <p class="mt-2 text-sm text-slate-300">Track your performance, growth areas, and momentum across each stage of your search.</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

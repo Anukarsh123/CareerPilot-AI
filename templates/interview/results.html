@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Feedback - {{ session.target_role }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-6">
+    <div class="panel p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+            <span class="badge badge-primary">Results</span>
+            <h1 class="text-3xl font-bold text-white mt-3">Interview Feedback</h1>
+            <p class="text-sm text-slate-400 mt-1">{{ session.target_role }} • {{ session.difficulty }}</p>
+        </div>
+
+        <div class="text-left md:text-right">
+            <span class="text-xs uppercase tracking-[0.18em] text-slate-400 block">Overall Score</span>
+            <span class="text-3xl font-bold text-white">{{ session.overall_score }}%</span>
+        </div>
+    </div>
+
+    {% for key, item in responses.items() %}
+    <div class="panel p-5 md:p-6">
+        <h3 class="text-lg font-semibold text-white mb-3">{{ item.question }}</h3>
+
+        <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4 text-sm text-slate-300">
+            <strong class="text-white">Your answer:</strong> {{ item.answer }}
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <span class="text-sm text-cyan-300">Feedback: {{ item.feedback }}</span>
+            <span class="badge badge-primary">Score: {{ item.score }}/100</span>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="pt-2 flex flex-col gap-3 sm:flex-row sm:justify-between">
+        <a href="{{ url_for('interview.index') }}" class="secondary-btn">
+            &larr; Return to interviews
+        </a>
+        <a href="{{ url_for('dashboard.index') }}" class="primary-btn">
+            Go to dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Register - CareerPilot-AI{% endblock %}
+
+{% block content %}
+<div class="mx-auto max-w-md py-8 md:py-12">
+    <div class="panel p-6 md:p-8">
+        <div class="mb-6 text-center">
+            <span class="badge badge-primary">Join us</span>
+            <h2 class="mt-4 text-3xl font-black text-white">Create account</h2>
+            <p class="mt-2 text-sm text-slate-400">Start your smarter career journey today.</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('auth.register') }}" class="space-y-4">
+            {{ form.hidden_tag() }}
+
+            <div>
+                <label>Full Name</label>
+                {{ form.full_name(class="") }}
+                {% for error in form.full_name.errors %}
+                    <span class="mt-1 block text-xs text-red-400">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                <label>Username</label>
+                {{ form.username(class="") }}
+                {% for error in form.username.errors %}
+                    <span class="mt-1 block text-xs text-red-400">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                <label>Email Address</label>
+                {{ form.email(class="") }}
+                {% for error in form.email.errors %}
+                    <span class="mt-1 block text-xs text-red-400">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                <label>Password</label>
+                {{ form.password(class="") }}
+                {% for error in form.password.errors %}
+                    <span class="mt-1 block text-xs text-red-400">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                <label>Confirm Password</label>
+                {{ form.confirm_password(class="") }}
+                {% for error in form.confirm_password.errors %}
+                    <span class="mt-1 block text-xs text-red-400">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="pt-2">
+                {{ form.submit(class="primary-btn w-full") }}
+            </div>
+        </form>
+
+        <p class="mt-6 text-center text-sm text-slate-400">
+            Already have an account?
+            <a href="{{ url_for('auth.login') }}" class="font-semibold text-indigo-300 hover:text-indigo-200">Sign in here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

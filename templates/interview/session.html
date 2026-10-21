@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Session - {{ session.target_role }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-6">
+    <div class="panel p-6 md:p-7 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div>
+            <span class="badge badge-primary">Live session</span>
+            <h1 class="text-3xl font-bold text-white mt-3">{{ session.target_role }} Interview</h1>
+            <p class="text-sm text-slate-400 mt-1">Difficulty: {{ session.difficulty }}</p>
+        </div>
+        <span class="pill pill-success">In progress</span>
+    </div>
+
+    <form method="POST" action="{{ url_for('interview.submit', session_id=session.id) }}" class="space-y-6">
+        {% for q in questions %}
+        <div class="panel p-5 md:p-6">
+            <h3 class="text-lg font-semibold text-white mb-3">Question {{ loop.index }}</h3>
+            <p class="text-slate-300 mb-4">{{ q }}</p>
+            <textarea name="question_{{ loop.index0 }}" rows="5" required placeholder="Type your answer here..." aria-label="Answer question {{ loop.index }}"></textarea>
+        </div>
+        {% endfor %}
+
+        <div class="pt-2">
+            <button type="submit" class="w-full">
+                Submit Interview Answers
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

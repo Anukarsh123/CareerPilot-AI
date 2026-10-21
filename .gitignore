@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.env
+*.db
+*.sqlite3
+uploads/*
+!uploads/.gitkeep
+reports/*
+!reports/.gitkeep
+.vscode/
+.idea/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+# Local application instance and databases
+instance/
+*.sqlite
+*.sqlite3
+
+# Environment variables and secrets
+.env.*
+!.env.example

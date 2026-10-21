@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}{{ resume.title }} - Details{% endblock %}
+
+{% block content %}
+{% set ats = parsed_data.get('ats_analysis', {}) if parsed_data else {} %}
+<div class="mx-auto max-w-5xl space-y-6 py-2">
+    <div class="panel p-6 md:p-7">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+                <span class="badge badge-primary">Resume details</span>
+                <h1 class="mt-3 text-3xl font-black text-white">{{ resume.title }}</h1>
+                <p class="mt-2 text-sm text-slate-400">Uploaded on {{ resume.created_at.strftime("%B %d, %Y") }}</p>
+            </div>
+            <a href="{{ url_for('resume.index') }}" class="secondary-btn">&larr; Back to list</a>
+        </div>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3">
+        <div class="panel p-6">
+            <p class="text-sm text-slate-400">ATS score</p>
+            <h3 class="mt-3 text-4xl font-black text-white">{{ ats.get('ats_score', 0) }}/100</h3>
+        </div>
+        <div class="panel p-6 md:col-span-2">
+            <h3 class="mb-2 text-lg font-bold text-white">ATS summary</h3>
+            <p class="text-sm leading-relaxed text-slate-300">{{ ats.get('summary', 'No AI ATS review available yet.') }}</p>
+        </div>
+    </div>
+
+    <div class="panel p-6">
+        <h2 class="mb-3 text-xl font-bold text-white">Extracted skills</h2>
+        <div class="flex flex-wrap gap-2">
+            {% if parsed_data.get('skills') %}
+                {% for skill in parsed_data.get('skills') %}
+                    <span class="badge badge-primary">{{ skill }}</span>
+                {% endfor %}
+            {% else %}
+                <p class="text-sm text-slate-400">No specific skills auto-detected.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div class="panel p-6">
+            <h3 class="mb-2 text-lg font-bold text-white">Contact info</h3>
+            <p class="text-sm text-slate-300"><strong>Email:</strong> {{ parsed_data.get('contact', {}).get('email') if parsed_data.get('contact') else 'N/A' }}</p>
+            <p class="mt-1 text-sm text-slate-300"><strong>Phone:</strong> {{ parsed_data.get('contact', {}).get('phone') if parsed_data.get('contact') else 'N/A' }}</p>
+        </div>
+
+        <div class="panel p-6">
+            <h3 class="mb-2 text-lg font-bold text-white">Summary</h3>
+            <p class="text-sm leading-relaxed text-slate-300">{{ parsed_data.get('summary') or 'No summary parsed.' }}</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="panel p-6">
+            <h3 class="mb-3 text-lg font-bold text-white">Strengths</h3>
+            <ul class="space-y-2 text-sm text-slate-300">
+                {% for item in ats.get('strengths', []) %}
+                    <li class="flex gap-2"><span class="text-emerald-400">✓</span><span>{{ item }}</span></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="panel p-6">
+            <h3 class="mb-3 text-lg font-bold text-white">What to improve</h3>
+            <ul class="space-y-2 text-sm text-slate-300">
+                {% for item in ats.get('improvements', []) %}
+                    <li class="flex gap-2"><span class="text-amber-400">•</span><span>{{ item }}</span></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel p-6">
+        <h3 class="mb-3 text-lg font-bold text-white">Raw extracted text</h3>
+        <pre class="overflow-x-auto whitespace-pre-wrap rounded-xl border border-slate-700 bg-slate-950/80 p-4 text-xs text-slate-300 font-mono">{{ resume.raw_text }}</pre>
+    </div>
+</div>
+{% endblock %}
